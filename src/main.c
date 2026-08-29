@@ -1,5 +1,9 @@
 #include <gb/gb.h>
 #include <stdio.h>
+#include "../include/head.c"
+#include "../include/backgroundtiles.c"
+#include "../include/testmap.c"
+
 
 void main() {
   const char *playerName = "Xylian";
@@ -7,19 +11,43 @@ void main() {
   int magic = 3;
   int power = 2;
 
-  printf("HELLO WORLD\n");
-  printf("TESTING\n");
-  printf("Hi %s, it's nice to meet you, welcome to our village!\n", playerName);
+  int pauseMenu = 0;
+  
+  // Load Sprite from included head.c file
+  set_sprite_data(0, 0, head_td);
+  set_sprite_tile(0, 0);
+  move_sprite(0, 88, 78);  
+
+  set_bkg_data(0, 7, backgroundtiles);
+  set_bkg_tiles(0, 0, 20, 18, testmap);
+
+  
+  SHOW_BKG;
+  SHOW_SPRITES;
+  DISPLAY_ON;
+
+  while(1) {
+
+    // Movement Code // 
+    switch(joypad()) {
+      case J_LEFT: 
+        scroll_sprite(0, -10, 0);
+        break;
+      case J_RIGHT:
+        scroll_sprite(0, 10, 0);
+        break;
+      case J_UP: 
+        scroll_sprite(0, 0, -10);
+        break;
+      case J_DOWN: 
+        scroll_sprite(0, 0, 10);
+        break;
+    }
+    delay(150);
 
 
-
-  printf("\n- PLAYER -\n");
-  printf("%s\n", playerName);
-  printf("LEVEL: %d\n", level);
-  printf("MAGIC: %d\n", magic);
-  printf("POWER: %d\n", power);
-  printf("----------\n");
-
+    wait_vbl_done();
+  }
 }
 
 // Structure of gameloop
