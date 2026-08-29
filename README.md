@@ -12,6 +12,8 @@ solid way of making a gameboy game.
 ## Sources 
 I used the amazing tutorial by GamingMonsters[https://www.youtube.com/@GamingMonsters] to get started in setting up the gb development environment
 
+* I use Sameboy for emulating the game
+
 * GBDK-2020
 
 * Aseprite

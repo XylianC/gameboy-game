@@ -28,10 +28,10 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      00000006  l__HEADER |    00000007  l__HEADER |    00000008  l__HEADER
      0000000C  l__GSINIT |    00000013  l__HRAM   |    0000002F  l__DATA  
      00000030  l__HEADER |    00000060  l__HEADER |    000000AB  l__HEADER
-     00000200  s__CODE   |    000003DD  l__CODE   |    000005DD  s__HOME  
-     000007EC  l__HOME   |    00000DC9  s__BASE   |    00000DC9  s__CODE_0
-     00000DC9  s__INITIA |    00000DC9  s__LIT    |    00000DCE  s__GSINIT
-     00000DDA  s__GSFINA |    0000C000  _shadow_O |    0000C0A0  s__DATA  
+     00000200  s__CODE   |    000004AD  l__CODE   |    000006AD  s__HOME  
+     00000811  l__HOME   |    00000EBE  s__BASE   |    00000EBE  s__CODE_0
+     00000EBE  s__INITIA |    00000EBE  s__LIT    |    00000EC3  s__GSINIT
+     00000ECF  s__GSFINA |    0000C000  _shadow_O |    0000C0A0  s__DATA  
      0000C0CF  s__BSS    |    0000C0CF  s__INITIA |    0000C0D4  s__HEAP  
      0000C0D4  s__HEAP_E |    0000E000  .STACK    |    0000FF80  s__HRAM  
 ASxxxx Linker V03.00/V05.40 + sdld,  page 2.
@@ -39,12 +39,12 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE                  00000200    000003DD =         989. bytes (REL,CON)
+_CODE                  00000200    000004AD =        1197. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00000200  _main     |    00000215  _printf   |    00000261  ___printf
-     000005BE  _sprintf 
+     00000200  _main     |    000002E1  _printf   |    000002F6  ___crlf  
+     00000331  ___printf |    0000068E  _sprintf 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 3.
 Hexadecimal  [32-Bits]
 
@@ -222,31 +222,32 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_HOME                  000005DD    000007EC =        2028. bytes (REL,CON)
+_HOME                  000006AD    00000811 =        2065. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     000005DD  .memset_s |    000005E6  .memcpy_s |    00000603  .display_
-     00000603  _display_ |    0000061B  _font_loa |    00000622  font_load
-     0000066A  font_copy |    000006A0  font_set  |    000006AD  .put_char
-     000006C5  .out_char |    000006CB  .del_char |    00000721  _putchar 
-     0000072A  _setchar  |    00000733  _font_loa |    00000741  _font_set
-     00000750  _font_ini |    0000076F  .cls      |    0000076F  _cls     
-     00000791  _gotoxy   |    0000079C  _posx     |    000007AD  _posy    
-     000007D5  .cr_curs  |    000007EA  .adv_curs |    00000846  .tmode   
-     00000863  .tmode_ou |    0000086C  _color    |    0000086C  _set_1bpp
-     0000087B  .drawing_ |    00000898  _font_ibm |    00000C79  .add_LCD 
-     00000C79  _add_LCD  |    00000C7F  .remove_L |    00000C7F  _remove_L
-     00000C85  _set_tile |    00000C8A  _set_bkg_ |    00000C8A  _set_win_
-     00000C92  _set_spri |    00000CC2  _uitoa    |    00000CD1  _itoa    
-     00000CE0  .itoa     |    00000CF4  .utoa     |    00000D68  _set_bkg_
-     00000D68  _set_win_ |    00000D70  _set_spri |    00000DC8  ___sdcc_c
+     000006AD  .memset_s |    000006B6  .memcpy_s |    000006D3  .display_
+     000006D3  _display_ |    000006EB  _puts     |    00000710  _font_loa
+     00000717  font_load |    0000075F  font_copy |    00000795  font_set 
+     000007A2  .put_char |    000007BA  .out_char |    000007C0  .del_char
+     00000816  _putchar  |    0000081F  _setchar  |    00000828  _font_loa
+     00000836  _font_set |    00000845  _font_ini |    00000864  .cls     
+     00000864  _cls      |    00000886  _gotoxy   |    00000891  _posx    
+     000008A2  _posy     |    000008CA  .cr_curs  |    000008DF  .adv_curs
+     0000093B  .tmode    |    00000958  .tmode_ou |    00000961  _color   
+     00000961  _set_1bpp |    00000970  .drawing_ |    0000098D  _font_ibm
+     00000D6E  .add_LCD  |    00000D6E  _add_LCD  |    00000D74  .remove_L
+     00000D74  _remove_L |    00000D7A  _set_tile |    00000D7F  _set_bkg_
+     00000D7F  _set_win_ |    00000D87  _set_spri |    00000DB7  _uitoa   
+     00000DC6  _itoa     |    00000DD5  .itoa     |    00000DE9  .utoa    
+     00000E5D  _set_bkg_ |    00000E5D  _set_win_ |    00000E65  _set_spri
+     00000EBD  ___sdcc_c
 ASxxxx Linker V03.00/V05.40 + sdld,  page 22.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_INITIALIZER           00000DC9    00000005 =           5. bytes (REL,CON)
+_INITIALIZER           00000EBE    00000005 =           5. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -255,17 +256,17 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_GSINIT                00000DCE    0000000C =          12. bytes (REL,CON)
+_GSINIT                00000EC3    0000000C =          12. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00000DCE  gsinit   
+     00000EC3  gsinit   
 ASxxxx Linker V03.00/V05.40 + sdld,  page 24.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_GSFINAL               00000DDA    00000001 =           1. bytes (REL,CON)
+_GSFINAL               00000ECF    00000001 =           1. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -328,13 +329,17 @@ Files Linked                              [ module(s) ]
 
 /home/xc-sc-fedora/.local/share/gbdk/lib/gb/crt0.o
                                           [ Runtime ]
-/tmp/lcc79870.o                           [ main ]
+/tmp/lcc272690.o                          [ main ]
 
 
 Libraries Linked                          [ object file ]
 
 /home/xc-sc-fedora/.local/share/gbdk/lib/sm83/sm83.lib
+                                          [ puts.o ]
+/home/xc-sc-fedora/.local/share/gbdk/lib/sm83/sm83.lib
                                           [ printf.o ]
+/home/xc-sc-fedora/.local/share/gbdk/lib/gb/gb.lib
+                                          [ crlf.o ]
 /home/xc-sc-fedora/.local/share/gbdk/lib/gb/gb.lib
                                           [ font.o ]
 /home/xc-sc-fedora/.local/share/gbdk/lib/gb/gb.lib
