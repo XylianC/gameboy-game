@@ -3,8 +3,8 @@
 #include "../include/common.h"
 #include "../gen/maps/testmap.h"
 #include "../gen/tiles/background_tiles.h"
-#include "entities/player.c"
 #include "../gen/sprites/playerSprite.h"
+#include "entities/player.c"
 
 struct Player player;
 UBYTE spritesize = 8;
@@ -55,7 +55,7 @@ void main() {
   SHOW_BKG;
   DISPLAY_ON;
 
-  int movementSpeed = 1;
+  UINT8 movementSpeed = 1;
 
   while(1) {
     if(joypad() & J_LEFT) {
