@@ -7,8 +7,8 @@
  Info:
    Section       : 
    Bank          : 0
-   Map size      : 20 x 18
-   Tile set      : Z:\run\user\1000\doc\8368bc15\tilemap.gbr
+   Map size      : 20 x 16
+   Tile set      : C:\gb_project\assets\tiles\background_tiles.gbr
    Plane count   : 1 plane (8 bits)
    Plane order   : Tiles are continues
    Tile offset   : 0
@@ -18,9 +18,9 @@
 
 */
 
-#define TestmapWidth 20
-#define TestmapHeight 18
-#define TestmapBank 0
+#define testmapWidth 20
+#define testmapHeight 16
+#define testmapBank 0
 
 extern unsigned char testmap[];
 

@@ -1,8 +1,32 @@
 #include <gb/gb.h>
 #include <stdio.h>
-#include "../include/head.c"
-#include "../include/backgroundtiles.c"
-#include "../include/testmap.c"
+#include "../include/common.h"
+#include "../gen/maps/testmap.h"
+#include "../gen/tiles/background_tiles.h"
+#include "entities/player.c"
+#include "../gen/sprites/playerSprite.h"
+
+struct Player player;
+UBYTE spritesize = 8;
+
+void movePlayer(struct Player* player, UINT8 x, UINT8 y) {
+  move_sprite(player->spriteid[0], x, y);
+  move_sprite(player->spriteid[1], x + spritesize, y); 
+}
+
+void setupPlayer() {
+  player.x = 80;
+  player.y = 70;
+  player.width = 16;
+  player.height = 16;
+
+  set_sprite_tile(0, 0);
+  player.spriteid[0] = 0;
+  set_sprite_tile(1, 2);
+  player.spriteid[1] = 1;
+
+  movePlayer(&player, player.x, player.y);
+}
 
 
 void main() {
@@ -13,54 +37,42 @@ void main() {
 
   int pauseMenu = 0;
   
-  // Load Sprite from included head.c file
-  set_sprite_data(0, 0, head_td);
-  set_sprite_tile(0, 0);
-  move_sprite(0, 88, 78);  
+  set_bkg_data(0, 16, background_tiles);
+  set_bkg_tiles(0, 0, 20, 16, testmap); 
 
-  set_bkg_data(0, 7, backgroundtiles);
-  set_bkg_tiles(0, 0, 20, 18, testmap);
-
+  // BKG_HEIGHT:    16 * 8 = 128px
+  // SCREEN_WIDTH:  20 * 8 = 160px
+  // HUD:           2 * 8 = 16px 
+  // GB RESOLUTION: 160x144px
   
-  SHOW_BKG;
+
+  SPRITES_8x16;
+  
+  set_sprite_data(0, 4, player_sprite);
+  setupPlayer();
+
   SHOW_SPRITES;
+  SHOW_BKG;
   DISPLAY_ON;
 
+  int movementSpeed = 1;
+
   while(1) {
-
-    // Movement Code // 
-    switch(joypad()) {
-      case J_LEFT: 
-        scroll_sprite(0, -10, 0);
-        break;
-      case J_RIGHT:
-        scroll_sprite(0, 10, 0);
-        break;
-      case J_UP: 
-        scroll_sprite(0, 0, -10);
-        break;
-      case J_DOWN: 
-        scroll_sprite(0, 0, 10);
-        break;
+    if(joypad() & J_LEFT) {
+      player.x -= movementSpeed;
+    } 
+    if(joypad() & J_RIGHT) {
+      player.x += movementSpeed;
     }
-    delay(150);
+    if(joypad() & J_UP) {
+      player.y -= movementSpeed;
+    }
+    if(joypad() & J_DOWN) {
+      player.y += movementSpeed;
+    }
 
+    movePlayer(&player, player.x, player.y);
 
     wait_vbl_done();
   }
 }
-
-// Structure of gameloop
-//
-// void main() {
-//  initialise_game() ---- Loads tiles and variables
-//  
-//  while (1) { ---- THIS ENTIRE LOOP IS 1 FRAME
-//    update_game_logic() --- Player Movement, Enemies...
-//
-//    wait_vbl_done(); --- Pause CPU until screen is finished drawing
-//
-//    update_graphics(); ---- Update graphics :o
-//  }
-//
-// }
