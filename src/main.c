@@ -1,15 +1,16 @@
 #include <gb/gb.h>
 #include <stdio.h>
+#include <gbdk/font.h>
 #include "../include/common.h"
-#include "../gen/maps/testmap.h"
-#include "../gen/tiles/background_tiles.h"
+#include "../gen/maps/overworld_test.h"
+#include "../gen/tiles/tileset.h"
 #include "../gen/sprites/playerSprite.h"
 #include "entities/player.c"
 
 struct Player player;
-UBYTE spritesize = 8;
+uint8_t spritesize = 8;
 
-void movePlayer(struct Player* player, UINT8 x, UINT8 y) {
+void movePlayer(struct Player* player, uint8_t x, uint8_t y) {
   move_sprite(player->spriteid[0], x, y);
   move_sprite(player->spriteid[1], x + spritesize, y); 
 }
@@ -30,15 +31,22 @@ void setupPlayer() {
 
 
 void main() {
-  const char *playerName = "Xylian";
-  int level = 4;
-  int magic = 3;
-  int power = 2;
+  font_t min_font;
 
-  int pauseMenu = 0;
+  font_init();
+  min_font = font_load(font_min);
+  font_set(min_font);
+  // min font is exactly 38 chars
   
-  set_bkg_data(0, 16, background_tiles);
-  set_bkg_tiles(0, 0, 20, 16, testmap); 
+  const char *playerName = "Xylian";
+  uint8_t level = 4;
+  uint8_t magic = 3;
+  uint8_t power = 2;
+
+  uint8_t pauseMenu = 0;
+  
+  set_bkg_data(0, 18, tileset);
+  set_bkg_tiles(0, 0, 20, 16, overworld_test); 
 
   // BKG_HEIGHT:    16 * 8 = 128px
   // SCREEN_WIDTH:  20 * 8 = 160px
@@ -55,7 +63,7 @@ void main() {
   SHOW_BKG;
   DISPLAY_ON;
 
-  UINT8 movementSpeed = 1;
+  uint8_t movementSpeed = 1;
 
   while(1) {
     if(joypad() & J_LEFT) {
