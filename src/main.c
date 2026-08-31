@@ -9,6 +9,11 @@
 #include "../gen/hud/hud.h"
 
 
+#include "../gen/maps/overworld_test2.h"
+
+const unsigned char *current_map;
+uint8_t current_map_id = 0;
+
 const uint8_t tile_collision_table[256] = {
     [0x2D] = 1, //water tile
 };
@@ -66,6 +71,20 @@ void setupPlayer() {
   movePlayer(&player, player.x, player.y);
 }
 
+void loadMap(uint8_t map_id, uint8_t startX, uint8_t startY) {
+  current_map_id = map_id;
+
+  if (map_id == 0) {
+    current_map = overworld_test;
+  } else {
+    current_map = overworld_test2;
+  }
+
+  set_bkg_tiles(0, 0, 20, 16, current_map);
+  player.x = startX;
+  player.y = startY; 
+  movePlayer(&player, player.x, player.y);
+}
 
 void main() {
   font_t min_font;
@@ -82,20 +101,21 @@ void main() {
 
   uint8_t pauseMenu = 0;
   
+  // BACKGROUND
   set_bkg_data(36, 18, tileset);
-  set_bkg_tiles(0, 0, 20, 16, overworld_test); 
+  loadMap(0, 80, 70);
 
   // BKG_HEIGHT:    16 * 8 = 128px
   // SCREEN_WIDTH:  20 * 8 = 160px
   // HUD:           2 * 8 = 16px 
   // GB RESOLUTION: 160x144px
   
-  set_win_tiles(0,0,7,1, hud);
-  move_win(6, 120);
+  // HUD
+  set_win_tiles(0,0,12,2, hud);
+  move_win(6, 128);
 
-
+  // SPRITES
   SPRITES_8x16;
-  
   set_sprite_data(0, 4, player_sprite);
   setupPlayer();
 
@@ -128,8 +148,17 @@ void main() {
       }
     }
 
+    if (player.x >= 152 && current_map_id == 0)  {
+      loadMap(1, 16, player.y);
+    }
+
+    else if (player.x <= 8 && current_map_id == 1) {
+      loadMap(0, 144, player.y);
+    }
+
+
     movePlayer(&player, player.x, player.y);
+    
     performantDelay(8);
-    wait_vbl_done();
   }
 }

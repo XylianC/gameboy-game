@@ -1,6 +1,6 @@
 /*
 
- OVERWORLD_TEST2.C
+ OVERWORLD_TEST.C
 
  Map Source File.
 
@@ -18,11 +18,11 @@
 
 */
 
-#define overworld_test2Width 20
-#define overworld_test2Height 16
-#define overworld_test2Bank 0
+#define overworld_testWidth 20
+#define overworld_testHeight 16
+#define overworld_testBank 0
 
-unsigned char overworld_test2[] =
+unsigned char overworld_test[] =
 {
   0x36,0x28,0x36,0x36,0x36,0x36,0x36,0x28,0x28,0x28,
   0x36,0x28,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x28,
@@ -58,4 +58,4 @@ unsigned char overworld_test2[] =
   0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D
 };
 
-/* End of OVERWORLD_TEST2.C */
+/* End of OVERWORLD_TEST.C */
