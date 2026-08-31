@@ -35,7 +35,7 @@ uint8_t canPlayerMove(uint8_t newPlayerX, uint8_t newPlayerY) {
     if (isTileSolid(overworld_test[20 * tileY1 + tileX1])) return 0;
     if (isTileSolid(overworld_test[20 * tileY1 + tileX2])) return 0;    
     if (isTileSolid(overworld_test[20 * tileY2 + tileX1])) return 0;
-    if (isTileSolid(overworld_test[20 * tileY2 + x2])) return 0;
+    if (isTileSolid(overworld_test[20 * tileY2 + tileX2])) return 0;
 
     return 1;
 }
