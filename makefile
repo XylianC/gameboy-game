@@ -1,7 +1,7 @@
 CC = lcc
 CFLAGS = -Wa-l -Wl-m -Wl-j -Iinclude -Igen
 TARGET = bin/game.gb
-EMULATOR = sameboy 
+EMULATOR = WINEPREFIX=$(HOME)/.wine-gbdev wine $(HOME)/.wine-gbdev/drive_c/gbdev/bgb/bgb.exe
 SRCS = $(wildcard src/*.c) \
 			 $(wildcard src/*/*.c) \
 			 $(wildcard gen/*.c) \
