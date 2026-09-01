@@ -1,21 +1,36 @@
 #include <gb/gb.h>
 #include <stdio.h>
 #include <gbdk/font.h>
+#include "entities/player.c"
 #include "../include/common.h"
-#include "../gen/maps/overworld_test.h"
 #include "../gen/tiles/tileset.h"
 #include "../gen/sprites/playerSprite.h"
-#include "entities/player.c"
 #include "../gen/hud/hud.h"
 
 
-#include "../gen/maps/overworld_test2.h"
+#include "../gen/maps/overworld_y1x1.h"
+#include "../gen/maps/overworld_y1x2.h"
+#include "../gen/maps/overworld_y2x1.h"
+#include "../gen/maps/overworld_y2x2.h"
+
+
+#define WORLD_WIDTH 2
+#define WORLD_HEIGHT 2
+
+const unsigned char * const overworld_grid[WORLD_HEIGHT][WORLD_WIDTH] = {
+  { overworld_y1x1, overworld_y1x2 },
+  { overworld_y2x1, overworld_y2x2 }
+};
+
 
 const unsigned char *current_map;
-uint8_t current_map_id = 0;
+uint8_t current_map_x = 1;
+uint8_t current_map_y = 1;
+
 
 const uint8_t tile_collision_table[256] = {
     [0x2D] = 1, //water tile
+                //
 };
 
 uint8_t isTileSolid(uint8_t tile_id) {
@@ -32,15 +47,15 @@ uint8_t canPlayerMove(uint8_t newPlayerX, uint8_t newPlayerY) {
     uint16_t tileY2 = (newPlayerY - 16 + 15) / 8; // bottom edge
 
     // Check bounds to prevent reading outside the overworld_test array
-    if (tileX1 >= 20 || tileX2 >= 20 || tileY1 >= 16 || tileY2 >= 16) {
-        return 0;
+    if (tileX1 < 0 || tileX2 >= 20 || tileY1 < 0 || tileY2 >= 16) {
+        return 1;
     }
 
     // Check all four corners against walkable tiles
-    if (isTileSolid(overworld_test[20 * tileY1 + tileX1])) return 0;
-    if (isTileSolid(overworld_test[20 * tileY1 + tileX2])) return 0;    
-    if (isTileSolid(overworld_test[20 * tileY2 + tileX1])) return 0;
-    if (isTileSolid(overworld_test[20 * tileY2 + tileX2])) return 0;
+    if (isTileSolid(current_map[20 * tileY1 + tileX1])) return 0;
+    if (isTileSolid(current_map[20 * tileY1 + tileX2])) return 0;    
+    if (isTileSolid(current_map[20 * tileY2 + tileX1])) return 0;
+    if (isTileSolid(current_map[20 * tileY2 + tileX2])) return 0;
 
     return 1;
 }
@@ -71,14 +86,13 @@ void setupPlayer() {
   movePlayer(&player, player.x, player.y);
 }
 
-void loadMap(uint8_t map_id, uint8_t startX, uint8_t startY) {
-  current_map_id = map_id;
+void loadMap(uint8_t mapX, uint8_t mapY, uint8_t startX, uint8_t startY) {
+  if(mapX >= WORLD_WIDTH || mapY >= WORLD_HEIGHT) return;
 
-  if (map_id == 0) {
-    current_map = overworld_test;
-  } else {
-    current_map = overworld_test2;
-  }
+  current_map_x = mapX;
+  current_map_y = mapY;
+  current_map = overworld_grid[mapY][mapX];
+
 
   set_bkg_tiles(0, 0, 20, 16, current_map);
   player.x = startX;
@@ -102,8 +116,8 @@ void main() {
   uint8_t pauseMenu = 0;
   
   // BACKGROUND
-  set_bkg_data(36, 18, tileset);
-  loadMap(0, 80, 70);
+  set_bkg_data(36, 24, tileset);
+  loadMap(0, 0, 80, 70);
 
   // BKG_HEIGHT:    16 * 8 = 128px
   // SCREEN_WIDTH:  20 * 8 = 160px
@@ -148,13 +162,22 @@ void main() {
       }
     }
 
-    if (player.x >= 152 && current_map_id == 0)  {
-      loadMap(1, 16, player.y);
+    if (player.x >= 152 && current_map_x + 1 < WORLD_WIDTH)  {
+      loadMap(current_map_x + 1, current_map_y, 16, player.y);
     }
 
-    else if (player.x <= 8 && current_map_id == 1) {
-      loadMap(0, 144, player.y);
+    if (player.x <= 8 && current_map_x > 0)  {
+      loadMap(current_map_x - 1, current_map_y, 144, player.y);
     }
+
+    if (player.y >= 128 && current_map_y + 1 < WORLD_HEIGHT)  {
+      loadMap(current_map_x , current_map_y + 1, player.x, 24);
+    }
+
+    if (player.y <= 16 && current_map_y > 0)  {
+      loadMap(current_map_x, current_map_y - 1, player.x, 120);
+    }
+
 
 
     movePlayer(&player, player.x, player.y);

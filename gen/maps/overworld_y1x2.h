@@ -1,6 +1,6 @@
 /*
 
- OVERWORLD_TEST.H
+ OVERWORLD_Y1X2.H
 
  Map Include File.
 
@@ -18,10 +18,10 @@
 
 */
 
-#define overworld_testWidth 20
-#define overworld_testHeight 16
-#define overworld_testBank 0
+#define overworld_y1x2Width 20
+#define overworld_y1x2Height 16
+#define overworld_y1x2Bank 0
 
-extern unsigned char overworld_test[];
+extern unsigned char overworld_y1x2[];
 
-/* End of OVERWORLD_TEST.H */
+/* End of OVERWORLD_Y1X2.H */
