@@ -1,5 +1,6 @@
 #include <gb/gb.h>
 #include "player.h"
+#include "player_sprite.h"
 #include "map_overworld.h"
 
 Player player;
@@ -35,6 +36,10 @@ uint8_t canPlayerMove(uint8_t newPlayerX, uint8_t newPlayerY) {
 }
 
 void setupPlayer() {
+  SPRITES_8x16;
+
+  set_sprite_data(0, 4, player_sprite);
+
   player.x = 80;
   player.y = 70;
   player.width = 16;
