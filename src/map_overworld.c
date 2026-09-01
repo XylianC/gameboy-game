@@ -3,7 +3,7 @@
 
 #include "map_overworld.h"
 #include "player.h"
-
+#include "npc.h"
 #include "maps/overworld_y1x1.h"
 #include "maps/overworld_y1x2.h"
 #include "maps/overworld_y2x1.h"
@@ -21,10 +21,10 @@ const unsigned char * const overworld_grid[WORLD_HEIGHT][WORLD_WIDTH] = {
 };
 
 const uint8_t tile_collision_table[256] = {
-    [0x2D] = 1, //water tile
-    [0x2A] = 1,
-    [0x2B] = 1,
-    [0x2C] = 1,//
+    [0x2D] = 1,   // WATER TILE
+    [0x2A] = 1,   // WALL TILE
+    [0x2B] = 1,   // WALL TILE
+    [0x2C] = 1,   // WALL TILE
 };
 
 uint8_t isTileSolid(uint8_t tile_id) {
@@ -43,6 +43,8 @@ void loadMap(uint8_t mapX, uint8_t mapY, uint8_t startX, uint8_t startY) {
   
   player.x = startX;
   player.y = startY; 
+
+  updateNPC(&test_npc);
 }
 
 void initOverworld(void) {

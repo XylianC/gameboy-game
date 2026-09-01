@@ -2,6 +2,7 @@
 #include "player.h"
 #include "player_sprite.h"
 #include "map_overworld.h"
+#include "npc.h"
 
 Player player;
 
@@ -18,8 +19,8 @@ uint8_t canPlayerMove(uint8_t newPlayerX, uint8_t newPlayerY) {
     int16_t tileX1 = ((int16_t)newPlayerX - 8 + 1) / 8;
     int16_t tileX2 = ((int16_t)newPlayerX - 8 + 14) / 8;
     
-    int16_t tileY1 = ((int16_t)newPlayerY - 8) / 8;
-    int16_t tileY2 = ((int16_t)newPlayerY - 16 + 15) / 8;
+    int16_t tileY1 = ((int16_t)newPlayerY - 8 + 1) / 8;
+    int16_t tileY2 = ((int16_t)newPlayerY - 1 - 1) / 8;
     
     // Allow walking "off-screen" edge to allow transitions
     if (tileX1 < 0 || tileX2 >= 20 || tileY1 < 0 || tileY2 >= 16) {
@@ -32,10 +33,14 @@ uint8_t canPlayerMove(uint8_t newPlayerX, uint8_t newPlayerY) {
     if (isTileSolid(current_map[20 * tileY2 + tileX1])) return 0;
     if (isTileSolid(current_map[20 * tileY2 + tileX2])) return 0;
 
+    if (checkPlayerNPCCollision(newPlayerX, newPlayerY, &test_npc)) {
+        return 0;
+    }
+
     return 1;
 }
 
-void setupPlayer() {
+void initPlayer() {
   SPRITES_8x16;
 
   set_sprite_data(0, 4, player_sprite);

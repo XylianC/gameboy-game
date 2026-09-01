@@ -41,7 +41,7 @@ void hud_update_name(const char *playerName) {
     set_win_tiles(0, 1, 6, 1, &hud_buffer[(1 * HUD_WIDTH) + 0]);
 }
 
-void hud_init(const char *playerName, uint8_t initialLevel) {
+void initHud(const char *playerName, uint8_t initialLevel) {
     uint8_t i;
     // Clear buffer to blank tiles (0x00)
     for (i = 0; i < (HUD_WIDTH * HUD_HEIGHT); i++) {

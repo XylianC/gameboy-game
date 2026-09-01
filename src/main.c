@@ -3,7 +3,7 @@
 #include <gbdk/font.h>
 
 #include "hud.h"
-
+#include "npc.h"
 #include "player.h"
 
 #include "map_overworld.h"
@@ -22,13 +22,15 @@ void main(void) {
   font_init();
   min_font = font_load(font_min);
   font_set(min_font);
+
+
   // min font is exactly 36 chars, so tiles need to be loaded at 36 offset
-  initOverworld();
   
   // HUD
-  hud_init("Stinky", 4);
-  // SPRITES
-  setupPlayer();
+  initHud("Stinky", 4);
+  initOverworld();
+  initPlayer();
+  setupNPCs();
 
   SHOW_BKG;
   SHOW_SPRITES;
@@ -38,7 +40,7 @@ void main(void) {
 
   while(1) {
     playerMovement();
-
+    checkNPCInteraction(&test_npc);
     performantDelay(8);
   }
 }

@@ -14,7 +14,7 @@ typedef struct {
 
 extern Player player;
 
-void setupPlayer(void);
+void initPlayer(void);
 void playerMovement(void);
 
 #endif
