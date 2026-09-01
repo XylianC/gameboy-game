@@ -26,9 +26,7 @@ void main(void) {
   initOverworld();
   
   // HUD
-  set_win_tiles(0,0,12,2, hud);
-  move_win(6, 128);
-
+  hud_init("Stinky", 4);
   // SPRITES
   setupPlayer();
 
